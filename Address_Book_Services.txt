@@ -1,0 +1,358 @@
+Welcome To the AddressBook Service database program;
+
+/*
+ *UC1:-Creating the Address_Book_Service Databases
+ */
+
+mysql> create database Address_Book_Services;		
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;						
++-----------------------+
+| Database              |
++-----------------------+
+| address_book_services |
+| company_info          |
+| information_schema    |
+| mobile_info           |
+| mysql                 |
+| payroll_service       |
+| performance_schema    |
+| salary_info           |
+| student_info          |
+| sys                   |
++-----------------------+
+10 rows in set (0.00 sec)
+
+mysql> use address_book_services;				
+Database changed
+mysql> select database();				
++-----------------------+
+| database()            |
++-----------------------+
+| address_book_services |
++-----------------------+
+1 row in set (0.00 sec)
+
+/*
+ * UC2:-creating the address book Table in the AddressBook Service database.
+ */
+
+mysql>  create table address_book_Table(FirstName VARCHAR(100)NOT NULL,LastName VARCHAR(100)NOT NULL,Address VARCHAR(200)	
+    -> ,City VARCHAR(100),State VARCHAR(100),Zip INT(10),PhoneNumber INT(20),Email VARCHAR(100));					
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> show tables;								
++--------------------------------+
+| Tables_in_address_book_service |
++--------------------------------+
+| address_book_table             |
++--------------------------------+
+1 row in set (0.01 sec)
+
+mysql> desc address_book_table;					    	
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| FirstName   | varchar(100) | NO   |     | NULL    |       |
+| LastName    | varchar(100) | NO   |     | NULL    |       |
+| Address     | varchar(200) | YES  |     | NULL    |       |
+| City        | varchar(100) | YES  |     | NULL    |       |
+| State       | varchar(100) | YES  |     | NULL    |       |
+| Zip         | int          | YES  |     | NULL    |       |
+| PhoneNumber | int          | YES  |     | NULL    |       |
+| Email       | varchar(100) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+/*
+ *UC3-Inserting the values to the address_book_Table.
+ */
+
+mysql> insert into address_book_table VALUES('Amar','Patil','Saiful','Solapur','Maharashtra',413004,798792862,'amar@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into address_book_table VALUES('Shashikant','daddimani','Hukkeri','Belagavi','karnatak',510358,908564856,'shashi@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into address_book_table VALUES('Divya','Gasti','Gokak','Belagavi','Karnatak',411002,97892723,'divya@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from address_book_table;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   908564856 | shashi@gmail.com |
+| Divya      | Gasti     | Gokak   | Belagavi | Karnatak    | 411002 |    97892723 | divya@gmail.com  |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> update address_book_table set PhoneNumber = 911327462 where Firstname ="Shashikant";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+/*
+ *UC4:-Ability to edit existing contact person using their name
+ */
+
+mysql> select * from address_book_table;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   911327462 | shashi@gmail.com |
+| Divya      | Gasti     | Gokak   | Belagavi | Karnatak    | 411002 |    97892723 | divya@gmail.com  |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+3 rows in set (0.00 sec)
+
+/*
+ *UC5:-Ability to delete person using person name.
+ */
+
+
+mysql> delete from address_book_table where Firstname="Divya";
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from address_book_table;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   911327462 | shashi@gmail.com |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+2 rows in set (0.00 sec)
+
+/*
+ *UC6:-Ability to Retrieve Person belonging to a City or State from the Address Book
+ */
+
+mysql> select * from address_book_table where City="Solapur";
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+
+| FirstName | LastName | Address | City    | State       | Zip    | PhoneNumber | Email          |
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+
+| Amar      | Patil    | Saiful  | Solapur | Maharashtra | 413004 |   798792862 | amar@gmail.com |
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+
+1 row in set (0.00 sec)
+mysql> select * from address_book_table where City="Belagavi";
++------------+-----------+---------+----------+----------+--------+-------------+------------------+
+| FirstName  | LastName  | Address | City     | State    | Zip    | PhoneNumber | Email            |
++------------+-----------+---------+----------+----------+--------+-------------+------------------+
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak | 510358 |   911327462 | shashi@gmail.com |
++------------+-----------+---------+----------+----------+--------+-------------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book_table where City="Chikkodi";
++-----------+----------+---------+----------+----------+--------+-------------+-----------------+
+| FirstName | LastName | Address | City     | State    | Zip    | PhoneNumber | Email           |
++-----------+----------+---------+----------+----------+--------+-------------+-----------------+
+| Divya     | Gasti    | Gokak   | Chikkodi | Karnatak | 411002 |    97892723 | divya@gmail.com |
++-----------+----------+---------+----------+----------+--------+-------------+-----------------+
+1 row in set (0.00 sec)
+
+/*
+ *UC7:-Ability to understand the size of address book by City and State
+ *- Here size indicates the count
+ */
+
+mysql> select count(*) from address_book_table where City="Solapur";
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select count(*) from address_book_table where City="Belagavi";
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from address_book_table where City="Chikkodi";
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+/*
+ *UC8:-Ability to retrieve entries sorted alphabetically by Person’s name for a given city
+ */
+
+
+mysql> select * from address_book_table order by LastName Desc;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   |
+| Divya      | Gasti     | Gokak   | Chikkodi | Karnatak    | 411002 |    97892723 | divya@gmail.com  |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   911327462 | shashi@gmail.com |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+
+3 rows in set (0.00 sec)
+
+/*
+ *UC9:-Ability to identify each Address Book with name and Type.
+ */
+
+mysql> alter table address_book_table Add COLUMN RelativeName VARCHAR(100);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Desc address_book_table;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| FirstName    | varchar(100) | NO   |     | NULL    |       |
+| LastName     | varchar(100) | NO   |     | NULL    |       |
+| Address      | varchar(200) | YES  |     | NULL    |       |
+| City         | varchar(100) | YES  |     | NULL    |       |
+| State        | varchar(100) | YES  |     | NULL    |       |
+| Zip          | int          | YES  |     | NULL    |       |
+| PhoneNumber  | int          | YES  |     | NULL    |       |
+| Email        | varchar(100) | YES  |     | NULL    |       |
+| RelativeName | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> alter table address_book_table ADD COLUMN Relation VARCHAR(100);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Desc address_book_table;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| FirstName    | varchar(100) | NO   |     | NULL    |       |
+| LastName     | varchar(100) | NO   |     | NULL    |       |
+| Address      | varchar(200) | YES  |     | NULL    |       |
+| City         | varchar(100) | YES  |     | NULL    |       |
+| State        | varchar(100) | YES  |     | NULL    |       |
+| Zip          | int          | YES  |     | NULL    |       |
+| PhoneNumber  | int          | YES  |     | NULL    |       |
+| Email        | varchar(100) | YES  |     | NULL    |       |
+| RelativeName | varchar(100) | YES  |     | NULL    |       |
+| Relation     | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> update address_book_table set RelativeName="Anil" where FirstName="Amar";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book_table set RelativeName="Mahesh" where FirstName="Shashikant";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book_table set RelativeName="Arati" where FirstName="Divya";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book_table;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            | RelativeName | Relation |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   | Anil         | NULL     |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   911327462 | shashi@gmail.com | Mahesh       | NULL     |
+| Divya      | Gasti     | Gokak   | Chikkodi | Karnatak    | 411002 |    97892723 | divya@gmail.com  | Arati        | NULL     |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> update address_book_table set Relation="Aunty" where FirstName="Divya";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book_table set Relation="Friend" where FirstName="Amar";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book_table set Relation="Uncle" where FirstName="Shashikant";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book_table;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            | RelativeName | Relation |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   | Anil         | Friend   |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   911327462 | shashi@gmail.com | Mahesh       | Uncle    |
+| Divya      | Gasti     | Gokak   | Chikkodi | Karnatak    | 411002 |    97892723 | divya@gmail.com  | Arati        | Aunty    |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+3 rows in set (0.00 sec)
+
+/*
+ *UC10:-Ability to get number of contact persons i.e. count by type.
+ */
+
+mysql> select * from address_book_table where Relation="Friend";
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+--------------+----------+
+| FirstName | LastName | Address | City    | State       | Zip    | PhoneNumber | Email          | RelativeName | Relation |
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+--------------+----------+
+| Amar      | Patil    | Saiful  | Solapur | Maharashtra | 413004 |   798792862 | amar@gmail.com | Anil         | Friend   |
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book_table where Relation="Uncle";
++------------+-----------+---------+----------+----------+--------+-------------+------------------+--------------+----------+
+| FirstName  | LastName  | Address | City     | State    | Zip    | PhoneNumber | Email            | RelativeName | Relation |
++------------+-----------+---------+----------+----------+--------+-------------+------------------+--------------+----------+
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak | 510358 |   911327462 | shashi@gmail.com | Mahesh       | Uncle    |
++------------+-----------+---------+----------+----------+--------+-------------+------------------+--------------+----------+
+1 row in set (0.00 sec)
+
+/*
+ *UC11:-Ability to add person to both Friend and Family.
+ */
+
+mysql> select * from address_book_table where Relation="Friend";
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+--------------+----------+
+| FirstName | LastName | Address | City    | State       | Zip    | PhoneNumber | Email          | RelativeName | Relation |
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+--------------+----------+
+| Amar      | Patil    | Saiful  | Solapur | Maharashtra | 413004 |   798792862 | amar@gmail.com | Anil         | Friend   |
++-----------+----------+---------+---------+-------------+--------+-------------+----------------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book_table where Relation="Uncle";
++------------+-----------+---------+----------+----------+--------+-------------+------------------+--------------+----------+
+| FirstName  | LastName  | Address | City     | State    | Zip    | PhoneNumber | Email            | RelativeName | Relation |
++------------+-----------+---------+----------+----------+--------+-------------+------------------+--------------+----------+
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak | 510358 |   911327462 | shashi@gmail.com | Mahesh       | Uncle    |
++------------+-----------+---------+----------+----------+--------+-------------+------------------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from address_book_table where Relation="Aunty";
++-----------+----------+---------+----------+----------+--------+-------------+-----------------+--------------+----------+
+| FirstName | LastName | Address | City     | State    | Zip    | PhoneNumber | Email           | RelativeName | Relation |
++-----------+----------+---------+----------+----------+--------+-------------+-----------------+--------------+----------+
+| Divya     | Gasti    | Gokak   | Chikkodi | Karnatak | 411002 |    97892723 | divya@gmail.com | Arati        | Aunty    |
++-----------+----------+---------+----------+----------+--------+-------------+-----------------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> update address_Book_table set RelativeName='Kiran' where FirstName='Shashikant';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_Book_table set RelativeName='Shrikant' where FirstName='Amar';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_Book_table set RelativeName='Veena' where FirstName='Divya';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book_table;
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+| FirstName  | LastName  | Address | City     | State       | Zip    | PhoneNumber | Email            | RelativeName | Relation |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+| Amar       | Patil     | Saiful  | Solapur  | Maharashtra | 413004 |   798792862 | amar@gmail.com   | Shrikant     | Friend   |
+| Shashikant | daddimani | Hukkeri | Belagavi | karnatak    | 510358 |   911327462 | shashi@gmail.com | Kiran        | Uncle    |
+| Divya      | Gasti     | Gokak   | Chikkodi | Karnatak    | 411002 |    97892723 | divya@gmail.com  | Veena        | Aunty    |
++------------+-----------+---------+----------+-------------+--------+-------------+------------------+--------------+----------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+
